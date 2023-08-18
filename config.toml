@@ -1,4 +1,4 @@
-baseURL = 'http://pianorganic.info/'
+baseURL = 'exampleSite/'
 languageCode = 'en-us'
 title = 'Pianorganic'
 theme = 'introduction'
