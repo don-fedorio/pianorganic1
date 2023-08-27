@@ -73,18 +73,18 @@ theme = 'introduction'
         languageName     = "English"
         languageCode     = "en-us"
         contentDir       = "content/en"
-        weight           = 0
+        weight           = 1
         title            = "Pianorganic"
         [languages.en.params]
-            description  = "Website Description"   # Max 160 characters show in search results
+            description  = ""   # Max 160 characters show in search results
             footerText   = "&copy;Pianorganic, 2023"                      # Text to override default footer text (markdown allowed)
 
     [languages.ru]
         languageName     = "Русский"
         languageCode     = "ru"
         contentDir       = "content/ru"
-        weight           = 1
+        weight           = 0
         title            = "Пианорганик"
         [languages.ru.params]
-            description  = "Описание сайта"
+            description  = ""
             footerText   = "&copy;Pianorganic, 2023"
