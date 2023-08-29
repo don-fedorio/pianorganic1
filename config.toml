@@ -54,7 +54,7 @@ theme = 'introduction'
     # Icon pack "fab" includes social network icons, see: https://fontawesome.com/icons?d=gallery&s=brands&m=free
     # Icon pack "fas" includes solid style icons, see: https://fontawesome.com/icons?d=gallery&s=solid&m=free
     [[params.social]]
-        url   = "https://youtube.com/@pianorganic6308/"
+        url   = "https://youtube.com/@pianorganic/"
         icon  = "fa-brands fa-youtube" # icon name without the 'fa-'
         icon_pack = "fab"
     [[params.social]]
