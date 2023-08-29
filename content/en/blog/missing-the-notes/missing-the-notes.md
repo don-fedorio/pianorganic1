@@ -18,9 +18,9 @@ But we were going the right way! The important idea is that when we play slowly,
 
 ## Fast movement is a different movement
 
-Unfortunately, the construction of a fast movement will always be different from a slow one; in other words, a fast movement is not a simple acceleration of a slow one. It is not necessary to miss at a slow pace, but in a fast one the work should be built more cunningly. The choice is no longer available to consciousness, it is necessary to act without hesitation: a kind of "pre-election campaign" should already be carried out, the necessary feelings of accuracy should light up even ** before ** we start playing.
+Unfortunately, the construction of a fast movement will always be different from a slow one; in other words, a fast movement is not a simple acceleration of a slow one. It is not necessary to miss at a slow pace, but in a fast one the work should be built more cunningly. The choice is no longer available to consciousness, it is necessary to act without hesitation: a kind of "pre-election campaign" should already be carried out, the necessary feelings of accuracy should light up even **before** we start playing.
 
-Presentiment, pre-correction of movement is called scientifically ** anticipation **. If you think about it, an act of faith is based on anticipation: we really, as it were, make a leap into the abyss without insurance, and only an inner sense of confidence gives us hope for a favorable outcome.
+Presentiment, pre-correction of movement is called scientifically **anticipation**. If you think about it, an act of faith is based on anticipation: we really, as it were, make a leap into the abyss without insurance, and only an inner sense of confidence gives us hope for a favorable outcome.
 
 ## A playing with anticipation is a playing with risk
 
