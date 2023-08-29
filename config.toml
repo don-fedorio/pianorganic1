@@ -76,7 +76,7 @@ theme = 'introduction'
         weight           = 1
         title            = "Pianorganic"
         [languages.en.params]
-            description  = ""   # Max 160 characters show in search results
+            description  = "Finding the organic approach in piano playing"   # Max 160 characters show in search results
             footerText   = "&copy;Pianorganic, 2023"                      # Text to override default footer text (markdown allowed)
 
     [languages.ru]
@@ -86,5 +86,5 @@ theme = 'introduction'
         weight           = 0
         title            = "Пианорганик"
         [languages.ru.params]
-            description  = ""
+            description  = "Осмысляем здесь, как играть на рояле органично"
             footerText   = "&copy;Pianorganic, 2023"
