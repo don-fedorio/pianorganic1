@@ -1,7 +1,7 @@
-baseURL = 'https://pianorganic.info/'
-languageCode = 'en-us'
-title = 'Pianorganic'
-theme = 'introduction'
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+title = "Pianorganic"
+theme = "introduction"
 
 [params]
     themeStyle                   = "light"                  # Choose "light" or "dark" or "auto"
@@ -67,7 +67,6 @@ theme = 'introduction'
         icon_pack = "fas"
     
 
-
 [languages]
     [languages.en]
         languageName     = "English"
@@ -84,7 +83,7 @@ theme = 'introduction'
         languageCode     = "ru"
         contentDir       = "content/ru"
         weight           = 0
-        title            = "Пианорганик"
+        title            = "Пианорганика"
         [languages.ru.params]
             description  = "Осмысляем здесь, как играть на рояле органично"
             footerText   = "&copy;Pianorganic, 2023"
