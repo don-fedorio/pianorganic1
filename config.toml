@@ -1,10 +1,12 @@
-baseURL = "http://localhost:1313/"
-languageCode = "en-us"
-title = "Pianorganic"
+baseURL = "https://pianorganic.info/"
+languageCode = "ru"
+title = "Пианорганика"
 theme = "introduction"
+defaultContentLanguage = "ru"
+
 
 [params]
-    themeStyle                   = "light"                  # Choose "light" or "dark" or "auto"
+    themeStyle                   = "auto"                  # Choose "light" or "dark" or "auto"
     favicon                      = "/img/fav.ico"          # Path to favicon file
     showMenu                     = true                    # Show navigation menu
     showRSSButton                = false                   # Show rss button in navigation
@@ -57,14 +59,17 @@ theme = "introduction"
         url   = "https://youtube.com/@pianorganic/"
         icon  = "fa-brands fa-youtube" # icon name without the 'fa-'
         icon_pack = "fab"
+        target = "_blank"
     [[params.social]]
         url   = "https://vk.com/pianorganic"
         icon  = "fa-brands fa-vk" # icon name without the 'fa-'
         icon_pack = "fab"
+        target = "_blank"
     [[params.social]]
-        url = "https://t.me/pianorganic"  # For a direct email link, use "mailto:test@example.org".
+        url = "https://t.me/pianorganic" # For a direct email link, use "mailto:test@example.org". 
         icon = "paper-plane" # icon name without the 'fa-'
         icon_pack = "fas"
+        target = "_blank"
     
 
 [languages]
@@ -76,7 +81,7 @@ theme = "introduction"
         title            = "Pianorganic"
         [languages.en.params]
             description  = "Finding the organic approach in piano playing"   # Max 160 characters show in search results
-            footerText   = "&copy;Pianorganic, 2023"                      # Text to override default footer text (markdown allowed)
+            footerText   = "&copy;Pianorganic, 2024"                      # Text to override default footer text (markdown allowed)
 
     [languages.ru]
         languageName     = "Русский"
@@ -86,4 +91,4 @@ theme = "introduction"
         title            = "Пианорганика"
         [languages.ru.params]
             description  = "Осмысляем здесь, как играть на рояле органично"
-            footerText   = "&copy;Pianorganic, 2023"
+            footerText   = "&copy;Пианорганика, 2024"

@@ -1,8 +1,7 @@
 ---
 title: "Pianorganic"
 draft: false
-weight: 0
-urL: "/"
+weight: 1
 ---
 
 Finding the organic approach in piano playing
