@@ -5,9 +5,9 @@
 [index_projects_allProjects]
     other = "Проекты"
 [index_blog_latestPosts]
-    other = "Свежее сообщение"
+    other = ""
 [index_blog_allPosts]
-    other = "Всё подряд"
+    other = ""
 [index_blog_readMore]
     other = "Читать дальше"
 [index_currentTime]

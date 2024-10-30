@@ -5,9 +5,9 @@
 [index_projects_allProjects]
     other = "All Projects"
 [index_blog_latestPosts]
-    other = "Latest Post"
+    other = ""
 [index_blog_allPosts]
-    other = "All Posts"
+    other = ""
 [index_blog_readMore]
     other = "Read more"
 [index_currentTime]

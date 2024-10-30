@@ -4,4 +4,4 @@ draft: false
 weight: 1
 ---
 
-Finding the organic approach in piano playing
+Learn how to play piano and trumpet organically
