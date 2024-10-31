@@ -33,3 +33,27 @@
 .hero-body {
     margin-top: 50px; !important/* Сдвинет секцию на 20px вверх, можно увеличить значение */
 }
+.fade-in.one {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0s;
+}
+
+.fade-in.two {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+
+.fade-in.three {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
