@@ -23,8 +23,8 @@
                 <h1 class="bold-title {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in one{{ end }}">
                     {{ if eq .Site.Language.Lang "en" }}
                     <!-- Английская версия -->
-                    <div class="logo-container" style="overflow: hidden; height: 382px; width: 100%; max-width: 1000px;">
-                        <img src="{{ "images/pianorganic_logo_en.png" | relURL }}" alt="{{ .Site.Params.title }}" style="border: none; box-shadow: none; outline: none; margin: 0; padding: 0; object-fit: cover; object-position: center;">
+                    <div class="logo-container" style="width: 100%; height: 375px; max-width: 1000px;">
+                        <img src="{{ "images/pianorganic_logo_en.png" | relURL }}" alt="{{ .Site.Params.title }}" align="center" style="border: none; box-shadow: none; outline: none; margin: 0; padding: 0; object-fit: cover; object-position: center;">
                     </div>
                     {{ else }}
                     <!-- Основная версия -->
