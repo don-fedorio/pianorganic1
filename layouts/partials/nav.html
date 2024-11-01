@@ -4,107 +4,120 @@
     <hr>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         {{ $isHome := .Page.IsHome }}
-        <div class="navbar-menu is-flex {{ if $isHome }}has-content-centered{{ end }}" id="navMenu">
+
+        <!-- Label and Burger icon for mobile -->
+        <div class="is-hidden-tablet" style="text-align: center; margin-bottom: 5px;">
+            <span style="font-size: 1.2em; color: #00b8d4;">Меню</span>
+        </div>
+        <a role="button" class="navbar-burger is-hidden-desktop" data-target="navMenu" aria-label="menu" aria-expanded="false" style="display: flex; justify-content: center;">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+
+        <div class="navbar-menu {{ if $isHome }}has-content-centered{{ end }}" id="navMenu">
             <!-- Look for custom menu and include it -->
             {{ if .Site.Menus.main }}
-                {{ range .Site.Menus.main }}
-                    {{ if .HasChildren }}
-                        <a class="navbar-item" href="{{ .URL }}">
-                            {{ .Pre }}
-                            {{ .Name }}
-                            {{ .Post }}
-                        </a>
-                        {{ range .Children }}
-                            <a class="navbar-item" href="{{ .URL }}">
-                                {{ .Pre }}
-                                {{ .Name }}
-                                {{ .Post }}
-                            </a>
-                        {{ end }}
-                    {{ else }}
-                        <a class="navbar-item" href="{{ .URL }}">
-                            {{ .Pre }}
-                            {{ .Name }}
-                            {{ .Post }}
-                        </a>
-                    {{ end }}
+            {{ range .Site.Menus.main }}
+            {{ if .HasChildren }}
+            <a class="navbar-item" href="{{ .URL }}">
+                {{ .Pre }}
+                {{ .Name }}
+                {{ .Post }}
+            </a>
+            {{ range .Children }}
+            <a class="navbar-item" href="{{ .URL }}">
+                {{ .Pre }}
+                {{ .Name }}
+                {{ .Post }}
+            </a>
+            {{ end }}
+            {{ else }}
+            <a class="navbar-item" href="{{ .URL }}">
+                {{ .Pre }}
+                {{ .Name }}
+                {{ .Post }}
+            </a>
+            {{ end }}
+            {{ end }}
+            {{ else }}
+            <!-- Use default menu -->
+            {{ if not $isHome }}
+            <a class="navbar-item" href="{{ "" | relLangURL }}">{{ i18n "nav_main" . }}</a>
+            {{ end }}
+
+            {{ with .Site.GetPage "/home" }}
+            {{ $pages := .Resources.ByType "page" }}
+
+            {{ with .Site.GetPage "/blog" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
+            {{ with .Site.GetPage "/projects" }}
+                {{ $pages = $pages | append . }}
+            {{ end }}
+
+            {{ range sort $pages "Params.weight" }}
+            {{ if ne .Name "contact.md" }}
+            {{ if eq (os.Stat .File.Dir).Name "projects" }}
+                {{ if $isHome }}
+                <a class="navbar-item" href="{{ printf "#%s" ( .Title | urlize) | relLangURL }}">{{ .Title | markdownify }}</a>
+                {{ else }}
+                {{ $pageIsInProjects := eq $.Page.Section "projects" }}
+                {{ if not (and $pageIsInProjects (eq $.Page.Kind "section")) }}
+                  <a class="navbar-item" href="{{ .Permalink }}">
+                  {{ if $pageIsInProjects }}
+                  {{ i18n "nav_backToSection" . }}
+                  {{ else }}
+                  {{ .Title }}
+                  {{ end }}
+                  </a>
+                {{ end }}
+                {{ end }}
+            {{ else if eq (os.Stat .File.Dir).Name "blog" }}
+                {{ if $isHome }}
+                <a class="navbar-item" href="{{ printf "#%s" ( .Title | urlize) | relLangURL }}">{{ .Title | markdownify }}</a>
+                {{ else }}
+                {{ $pageIsInBlog := eq $.Page.Section "blog" }}
+                {{ if not (and $pageIsInBlog (eq $.Page.Kind "section")) }}
+                  <a class="navbar-item" href="{{ .Permalink }}">
+                  {{ if $pageIsInBlog }}
+                  {{ i18n "nav_backToSection" . }}
+                  {{ else }}
+                  {{ .Title | singularize }}
+                  {{ end }}
+                  </a>
+                {{ end }}
                 {{ end }}
             {{ else }}
-                <!-- Use default menu -->
-                {{ if not $isHome }}
-                    <a class="navbar-item" href="{{ "" | relLangURL }}">{{ i18n "nav_main" . }}</a>
-                {{ end }}
-
-                {{ with .Site.GetPage "/home" }}
-                    {{ $pages := .Resources.ByType "page" }}
-
-                    {{ with .Site.GetPage "/blog" }}
-                        {{ $pages = $pages | append . }}
-                    {{ end }}
-
-                    {{ with .Site.GetPage "/projects" }}
-                        {{ $pages = $pages | append . }}
-                    {{ end }}
-
-                    {{ range sort $pages "Params.weight" }}
-                        {{ if ne .Name "contact.md" }}
-                            {{ if eq (os.Stat .File.Dir).Name "projects" }}
-                                {{ if $isHome }}
-                                    <a class="navbar-item" href="{{ printf "#%s" ( .Title | urlize) | relLangURL }}">{{ .Title | markdownify }}</a>
-                                {{ else }}
-                                    {{ $pageIsInProjects := eq $.Page.Section "projects" }}
-                                    {{ if not (and $pageIsInProjects (eq $.Page.Kind "section")) }}
-                                        <a class="navbar-item" href="{{ .Permalink }}">
-                                            {{ if $pageIsInProjects }}
-                                                {{ i18n "nav_backToSection" . }}
-                                            {{ else }}
-                                                {{ .Title }}
-                                            {{ end }}
-                                        </a>
-                                    {{ end }}
-                                {{ end }}
-                            {{ else if eq (os.Stat .File.Dir).Name "blog" }}
-                                {{ if $isHome }}
-                                    <a class="navbar-item" href="{{ printf "#%s" ( .Title | urlize) | relLangURL }}">{{ .Title | markdownify }}</a>
-                                {{ else }}
-                                    {{ $pageIsInBlog := eq $.Page.Section "blog" }}
-                                    {{ if not (and $pageIsInBlog (eq $.Page.Kind "section")) }}
-                                        <a class="navbar-item" href="{{ .Permalink }}">
-                                            {{ if $pageIsInBlog }}
-                                                {{ i18n "nav_backToSection" . }}
-                                            {{ else }}
-                                                {{ .Title | singularize }}
-                                            {{ end }}
-                                        </a>
-                                    {{ end }}
-                                {{ end }}
-                            {{ else }}
-                                <a class="navbar-item" href="{{ if $isHome }}#{{ .File.TranslationBaseName }}{{ else }}{{ printf "#%s" (.File.TranslationBaseName | urlize) | relLangURL }}{{ end }}">{{ .Title | markdownify }}</a>
-                            {{ end }}
-                        {{ end }}
-                    {{ end }}
-                {{ end }}
-
-                {{ with .Site.GetPage "/home" }}
-                    {{ with .Resources.GetMatch "contact.md" }}
-                        <a class="navbar-item" href="{{ if $isHome }}#{{ .File.TranslationBaseName }}{{ else }}{{ printf "#%s" (.File.TranslationBaseName | urlize) | relLangURL }}{{ end }}">{{ .Title | markdownify }}</a>
-                    {{ end }}
-                {{ end }}
-                
-                <!-- New custom link for individual lessons with i18n -->
-                <a class="navbar-item" href="/lessons/">{{ i18n "menu_lessons" }}</a>
-                
-                {{ range $.Site.Home.AllTranslations.ByWeight }}
-                    {{ if ne .Language.LanguageName $.Language.LanguageName }}
-                        <a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
-                    {{ end }}
-                {{ end }}
+            <a class="navbar-item" href="{{ if $isHome }}#{{ .File.TranslationBaseName }}{{ else }}{{ printf "#%s" (.File.TranslationBaseName | urlize) | relLangURL }}{{ end }}">{{ .Title | markdownify }}</a>
             {{ end }}
+            {{ end }}
+            {{ end }}
+            {{ end }}
+
+            {{ with .Site.GetPage "/home" }}
+            {{ with .Resources.GetMatch "contact.md" }}
+            <a class="navbar-item" href="{{ if $isHome }}#{{ .File.TranslationBaseName }}{{ else }}{{ printf "#%s" (.File.TranslationBaseName | urlize) | relLangURL }}{{ end }}">{{ .Title | markdownify }}</a>
+            {{ end }}
+            {{ end }}
+            
+            <!-- New custom link for individual lessons -->
+            <a class="navbar-item" href="/lessons/">Индивидуальные занятия</a>
+            
+            {{ range $.Site.Home.AllTranslations.ByWeight }}
+            {{ if ne .Language.LanguageName $.Language.LanguageName }}
+            <a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+            {{ end }}
+            {{ end }}
+
+           
 
             {{ if and .Site.Params.showRSSButton }}
-                <a class="navbar-item" href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}"><i class="fas fa-rss"></i></a>
+            <a class="navbar-item" href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}"><i class="fas fa-rss"></i></a>
             {{ end }}
-        </div> <!-- End of navbar-menu -->
+            {{ end }}
+        </div>
     </nav>
     <hr>
 </div>
