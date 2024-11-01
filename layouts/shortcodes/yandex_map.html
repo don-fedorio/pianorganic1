@@ -1,0 +1,5 @@
+<div style="position:relative;overflow:hidden;">
+    <a href="{{ .Get "link1" }}" style="color:#eee;font-size:12px;position:absolute;top:0px;">{{ .Get "link1Text" }}</a>
+    <a href="{{ .Get "link2" }}" style="color:#eee;font-size:12px;position:absolute;top:14px;">{{ .Get "link2Text" }}</a>
+    <iframe src="{{ .Get "src" }}" width="{{ .Get "width" | default "560" }}" height="{{ .Get "height" | default "400" }}" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+</div>

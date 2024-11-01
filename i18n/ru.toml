@@ -23,3 +23,5 @@
     other = "Поделиться"
 [footer_text]
     other = "[**Introduction**](https://github.com/victoriadrake/hugo-theme-introduction/) тема для [Hugo](http://gohugo.io/). Создано с использованием [<i class=\"fa fa-heart\"></i> и <i class=\"fa fa-coffee\"></i>](https://victoria.dev) участниками open source сообщества."
+[menu_lessons]
+    other = "Индивидуальные занятия"

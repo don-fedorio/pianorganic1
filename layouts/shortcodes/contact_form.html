@@ -1,0 +1,102 @@
+<form action="https://formspree.io/f/xnnqpzbg" method="POST" style="max-width: 600px; margin: 0 auto;">
+  <div style="margin-bottom: 15px;">
+    <label for="name" style="display: block; font-weight: bold;">Как вас зовут:</label>
+    <input type="text" name="name" id="name" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+  </div>    
+  <div style="margin-bottom: 15px;">
+    <label for="email" style="display: block; font-weight: bold;">Ваша электронная почта:</label>
+    <input type="email" name="email" id="email" required placeholder="Ваш email" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="age" style="display: block; font-weight: bold;">Укажите ваш возраст:</label>
+    <select name="age" id="age" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="">Выберите возраст</option>
+      <option value="25+">25+</option>
+      <option value="19-24">19-24 лет</option>
+      <option value="14-18">14-18 лет</option>
+      <option value="10-13">10-13 лет</option>
+      <option value="7-9">7-9 лет</option>
+    </select>
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="instrument" style="display: block; font-weight: bold;">Выберите инструмент:</label>
+    <select name="instrument" id="instrument" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="">Выберите инструмент</option>
+      <option value="фортепиано">Фортепиано</option>
+      <option value="труба">Труба</option>
+    </select>
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="level" style="display: block; font-weight: bold;">Предварительная подготовка:</label>
+    <select name="level" id="level" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="">Выберите уровень</option>
+      <option value="N5">Новичок</option>
+      <option value="N4">Начинающий (основы теории, читаю ноты)</option>
+      <option value="N3">Окончил(а) музыкальную школу</option>
+      <option value="N2">Среднее музыкальное образование</option>
+      <option value="N1">Высшее музыкальное образование</option>
+    </select>
+  </div>
+  <div style="font-size: 12px; margin-bottom: 15px;">
+    Не волнуйтесь, если вы только начинаете! Федор рад заниматься как с опытными музыкантами, так и с теми, кто делает первые шаги. Каждый ученик получает внимание и поддержку на любом уровне.
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="perweek" style="display: block; font-weight: bold;">Количество занятий в неделю:</label>
+    <select name="perweek" id="perweek" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="">Выберите количество занятий</option>
+      <option value="1 занятие">1 занятие в неделю</option>
+      <option value="2 занятия">2 занятия в неделю</option>
+      <option value="3 занятия">3 занятия в неделю</option>
+    </select>
+  </div>
+  <div style="margin-bottom: 15px;">
+    <label for="message" style="display: block; font-weight: bold;">Дополнительно:</label>
+    <textarea name="message" id="message" placeholder="Расскажите немного о себе. Почему вы хотите заниматься?" style="width: 100%; height: 150px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>
+  </div>
+  <button type="submit" id="submitButton" disabled style="display: inline-block; padding: 10px 20px; background-color: #00b8d4; color: #fff; border: none; border-radius: 5px; cursor: not-allowed; opacity: 0.6;">
+    Отправить заявку
+  </button>
+  <div class="thank-you-message" style="display: none; margin-top: 15px; color: #00b8d4;">
+    Спасибо за вашу заявку! Мы свяжемся с вами в течение суток.
+  </div>
+</form>
+
+<script>
+  // Проверка заполненности всех обязательных полей
+  const form = document.querySelector('form');
+  const submitButton = document.querySelector('#submitButton');
+  const requiredFields = Array.from(form.querySelectorAll('input[required], select[required]'));
+
+  function checkFields() {
+    const allFilled = requiredFields.every(field => field.value.trim() !== '');
+    submitButton.disabled = !allFilled;
+    submitButton.style.opacity = allFilled ? '1' : '0.6';
+    submitButton.style.cursor = allFilled ? 'pointer' : 'not-allowed';
+  }
+
+  requiredFields.forEach(field => {
+    field.addEventListener('input', checkFields);
+    field.addEventListener('change', checkFields);
+  });
+
+  form.onsubmit = function(event) {
+    event.preventDefault();
+    fetch(this.action, {
+      method: this.method,
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        document.querySelector('.thank-you-message').style.display = 'block';
+        this.reset();
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.6';
+        submitButton.style.cursor = 'not-allowed';
+      } else {
+        alert('Ошибка при отправке формы. Попробуйте еще раз.');
+      }
+    }).catch(error => {
+      alert('Ошибка при отправке формы. Попробуйте еще раз.');
+    });
+  };
+</script>
