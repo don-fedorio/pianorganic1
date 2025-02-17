@@ -96,4 +96,4 @@ defaultContentLanguage = "ru"
         titleSub = "труба"
         [languages.ru.params]
             description  = "Обучение игре на фортепиано и трубе"
-            footerText   = "&copy;Пианорганика, 2024"
+            footerText   = "&copy;Пианорганика, 2025"
