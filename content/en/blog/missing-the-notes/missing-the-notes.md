@@ -1,6 +1,6 @@
 ---
 title: "It is not necessary to miss"
-date: 2023-08-29
+date: 2025-05-19
 weight: 20
 tags: ["play/hints"]
 draft: false
