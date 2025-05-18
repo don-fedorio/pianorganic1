@@ -3,7 +3,7 @@ title: "Cats Piano Song"
 date: 2023-08-18
 weight: 20
 tags: ["composition"]
-draft: false
+draft: true
 ---
 
 I was sitting like this in a queue at a veterinary clinic. I had a phone with me with [the Notion app](https://apps.apple.com/us/app/notion/id475820434) for music notation (not advertising). I wrote a simple piece with my finger on the phone, which, however, is not so easy to play.
