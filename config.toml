@@ -84,7 +84,7 @@ defaultContentLanguage = "ru"
         titleSub = "trumpet"
         [languages.en.params]
             description  = "Teaching playing piano and trumpet"   # Max 160 characters show in search results
-            footerText   = "&copy;Pianorganic, 2024"                      # Text to override default footer text (markdown allowed)
+            footerText   = "&copy;Pianorganic & Trumpet, 2025"                      # Text to override default footer text (markdown allowed)
 
     [languages.ru]
         languageName     = "🇷🇺Русский"
@@ -96,4 +96,4 @@ defaultContentLanguage = "ru"
         titleSub = "труба"
         [languages.ru.params]
             description  = "Обучение игре на фортепиано и трубе"
-            footerText   = "&copy;Пианорганика, 2025"
+            footerText   = "&copy;Пианорганика и труба, 2025"
