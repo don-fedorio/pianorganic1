@@ -62,8 +62,13 @@ defaultContentLanguage = "ru"
         icon_pack = "fab"
         target = "_blank"
     [[params.social]]
-        url   = "https://vk.com/pianorganic"
-        icon  = "fa-brands fa-vk" # icon name without the 'fa-'
+        url   = "https://www.instagram.com/pianorganic_trumpet?igsh=b3MzYnBwd3NsdDIx&utm_source=qr"
+        icon  = "fa-brands fa-instagram" # icon name without the 'fa-'
+        icon_pack = "fab"
+        target = "_blank"
+    [[params.social]]
+        url   = "https://youtube.com/@pianorganic/"
+        icon  = "fa-brands fa-youtube" # icon name without the 'fa-'
         icon_pack = "fab"
         target = "_blank"
     [[params.social]]
