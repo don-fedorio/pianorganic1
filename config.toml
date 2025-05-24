@@ -8,7 +8,7 @@ defaultContentLanguage = "ru"
 
 [params]
     themeStyle                   = "light"                  # Choose "light" or "dark" or "auto"
-    favicon                      = "/img/fav.ico"          # Path to favicon file
+    favicon                      = "static/images/favicon.svg"          # Path to favicon file
     showMenu                     = true                    # Show navigation menu
     showRSSButton                = false                   # Show rss button in navigation
     fadeIn                       = true                    # Turn on/off the fade-in effect
