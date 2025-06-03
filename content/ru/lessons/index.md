@@ -4,7 +4,7 @@ date: 2024-11-01T16:12:06+03:00
 draft: false
 ---
 
-![картинка](/images/IMG_3642.jpg)
+<img src="/images/IMG_3642.jpg" alt="картинка" style="max-width:80%; height:auto;">
 
 #### О преподавателе
 
