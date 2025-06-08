@@ -6,6 +6,8 @@ draft: false
 
 <p><img src="/images/IMG_3642.jpg" alt=""></p>
 
+![](/images/IMG_3642.jpg)
+
 #### О преподавателе
 
 Здравствуйте!
