@@ -4,7 +4,7 @@ date: 2024-11-01T16:12:06+03:00
 draft: false
 ---
 
-<img src="/images/IMG_3642.jpg" alt="">
+<p><img src="/images/IMG_3642.jpg" alt=""></p>
 
 #### О преподавателе
 
