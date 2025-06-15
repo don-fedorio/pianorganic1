@@ -1,3 +1,7 @@
-<div style="float: {{ .Get "position" | default "right" }}; margin: 0 1em 1em 0; width: {{ .Get "width" | default "300px" }};">
+<div style="float: {{ .Get "position" | default "right" }}; margin: {{ if eq (.Get "position") "right" }}0 0 1em 1em{{ else }}0 1em 1em 0{{ end }}; width: {{ .Get "width" | default "300px" }};">
   <img src="{{ .Get "src" }}" alt="{{ .Get "alt" | default "" }}" style="width: 100%; height: auto;">
+</div>
+
+<div style="text-align: justify;">
+  {{ .Inner }}
 </div>
