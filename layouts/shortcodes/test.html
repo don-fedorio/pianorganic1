@@ -1,1 +1,3 @@
-<p><img src="/images/IMG_3642.jpg" alt="" width="400"></p>
+<div style="float: {{ .Get "position" | default "right" }}; margin: 0 1em 1em 0; width: {{ .Get "width" | default "300px" }};">
+  <img src="{{ .Get "src" }}" alt="{{ .Get "alt" | default "" }}" style="width: 100%; height: auto;">
+</div>
