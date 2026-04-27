@@ -1,0 +1,332 @@
+{{ define "customCSS" }}
+<style>
+  #graph-wrap {
+    width: 100%;
+    height: 68vh;
+    min-height: 440px;
+    position: relative;
+    background: #f6f8fb;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #dde6ee;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    margin-bottom: 0.75rem;
+  }
+
+  #graph-svg {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+  }
+
+  #graph-svg:active { cursor: grabbing; }
+
+  .g-link {
+    stroke: #b8d4dc;
+    stroke-width: 1.6px;
+    stroke-linecap: round;
+    transition: stroke 0.25s, opacity 0.25s, stroke-width 0.25s;
+  }
+
+  .g-link.link-hi {
+    stroke: #00b8d4;
+    stroke-width: 2.8px;
+  }
+
+  .g-link.link-dim { opacity: 0.07; }
+
+  .g-node circle {
+    fill: #ffffff;
+    stroke: #00b8d4;
+    stroke-width: 2.2px;
+    cursor: pointer;
+    transition: fill 0.2s, stroke-width 0.2s;
+  }
+
+  .g-node.node-hi circle {
+    fill: #00b8d4;
+    stroke: #007a8f;
+    stroke-width: 2.5px;
+  }
+
+  .g-node.node-dim circle {
+    fill: #f0f0f0;
+    stroke: #ccc;
+    opacity: 0.35;
+  }
+
+  .g-label {
+    font-family: inherit;
+    font-size: 10.5px;
+    fill: #4a5568;
+    text-anchor: middle;
+    pointer-events: none;
+    letter-spacing: 0.01em;
+    transition: opacity 0.2s, fill 0.2s;
+  }
+
+  .g-node.node-hi .g-label { fill: #005f6b; font-weight: 600; }
+  .g-node.node-dim .g-label { opacity: 0.2; }
+
+  #g-tip {
+    position: absolute;
+    background: rgba(255,255,255,0.97);
+    border: 1px solid #cde4ea;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 13px;
+    line-height: 1.45;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    max-width: 210px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+    color: #444;
+  }
+
+  #g-tip strong {
+    display: block;
+    color: #00959f;
+    margin-bottom: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .graph-hint {
+    font-size: 12px;
+    color: #b0bec5;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+</style>
+{{ end }}
+
+{{ define "main" }}
+<div class="container">
+  <div id="graph-wrap">
+    <svg id="graph-svg">
+      <defs>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+    </svg>
+    <div id="g-tip"></div>
+  </div>
+  <p class="graph-hint">Нажмите на статью, чтобы открыть &nbsp;·&nbsp; Перетащите узел &nbsp;·&nbsp; Колёсиком — масштаб</p>
+</div>
+{{ end }}
+
+{{ define "customScripts" }}
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  const NODES = [
+    {
+      id: "personazh",
+      label: ["Персонаж"],
+      url: "/blog/personazh/personazh/",
+      desc: "Живая сущность подсознания и внутренний голос музыки"
+    },
+    {
+      id: "mastery",
+      label: ["Рождение", "мастерства"],
+      url: "/blog/mastery/mastery/",
+      desc: "Как рождается настоящее мастерство — изнутри, а не по правилам"
+    },
+    {
+      id: "etude",
+      label: ["Когда", "этюд поёт"],
+      url: "/blog/etude/etude/",
+      desc: "Этюд как путь и хроника преодоления"
+    },
+    {
+      id: "authority",
+      label: ["Не строй", "из себя знатока"],
+      url: "/blog/authority/authority/",
+      desc: "Подлинное знание без позы и давления"
+    },
+    {
+      id: "sensei",
+      label: ["Тот, кто шёл", "впереди"],
+      url: "/blog/sensei/sensei/",
+      desc: "Учитель, который сам прошёл путь через ошибки"
+    },
+    {
+      id: "art-creativity",
+      label: ["Где начинается", "творчество"],
+      url: "/blog/art-creativity/art-creativity/",
+      desc: "Граница между искусством и подлинным творчеством"
+    },
+    {
+      id: "by-heart",
+      label: ["Выучить", "наизусть"],
+      url: "/blog/by-heart/by-heart/",
+      desc: "Память как живой отклик, а не зубрёжка"
+    }
+  ];
+
+  const LINKS = [
+    { source: "personazh",       target: "mastery"        },
+    { source: "personazh",       target: "by-heart"       },
+    { source: "personazh",       target: "art-creativity" },
+    { source: "mastery",         target: "etude"          },
+    { source: "mastery",         target: "art-creativity" },
+    { source: "sensei",          target: "authority"      },
+    { source: "sensei",          target: "mastery"        },
+    { source: "etude",           target: "by-heart"       },
+    { source: "by-heart",        target: "art-creativity" }
+  ];
+
+  const R = 22;
+  const LINE_H = 13;
+
+  const wrap    = document.getElementById("graph-wrap");
+  const svgEl   = document.getElementById("graph-svg");
+  const tipEl   = document.getElementById("g-tip");
+  const svg     = d3.select(svgEl);
+
+  let W = wrap.clientWidth;
+  let H = wrap.clientHeight;
+
+  // ── zoom / pan ──────────────────────────────────────────────────────────
+  const root = svg.append("g").attr("class", "zoom-root");
+
+  svg.call(
+    d3.zoom()
+      .scaleExtent([0.3, 4])
+      .on("zoom", (ev) => root.attr("transform", ev.transform))
+  );
+
+  // ── simulation ──────────────────────────────────────────────────────────
+  const sim = d3.forceSimulation(NODES)
+    .force("link",    d3.forceLink(LINKS).id(d => d.id).distance(170).strength(0.42))
+    .force("charge",  d3.forceManyBody().strength(-520))
+    .force("center",  d3.forceCenter(W / 2, H / 2))
+    .force("collide", d3.forceCollide(R + 46))
+    .alphaDecay(0.022)
+    .velocityDecay(0.38);
+
+  // ── links ────────────────────────────────────────────────────────────────
+  const linkSel = root.append("g").attr("class", "links")
+    .selectAll("line")
+    .data(LINKS)
+    .join("line")
+    .attr("class", "g-link")
+    .style("opacity", 0);
+
+  // ── nodes ────────────────────────────────────────────────────────────────
+  const nodeSel = root.append("g").attr("class", "nodes")
+    .selectAll("g")
+    .data(NODES)
+    .join("g")
+    .attr("class", "g-node")
+    .style("opacity", 0)
+    .call(
+      d3.drag()
+        .on("start", (ev, d) => {
+          if (!ev.active) sim.alphaTarget(0.3).restart();
+          d.fx = d.x; d.fy = d.y;
+        })
+        .on("drag", (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
+        .on("end",  (ev, d) => {
+          if (!ev.active) sim.alphaTarget(0);
+          d.fx = null; d.fy = null;
+        })
+    );
+
+  nodeSel.append("circle").attr("r", R);
+
+  // multi-line labels below the circle
+  nodeSel.each(function (d) {
+    const g = d3.select(this);
+    const totalH = d.label.length * LINE_H;
+    const startY = R + 10;
+
+    d.label.forEach((line, i) => {
+      g.append("text")
+        .attr("class", "g-label")
+        .attr("y", startY + i * LINE_H + (d.label.length === 1 ? LINE_H / 2 : 0))
+        .text(line);
+    });
+  });
+
+  // ── fade-in after physics settles a bit ─────────────────────────────────
+  setTimeout(() => {
+    nodeSel.transition().duration(700).style("opacity", 1);
+    linkSel.transition().duration(700).style("opacity", 1);
+  }, 250);
+
+  // ── hover / highlight ────────────────────────────────────────────────────
+  function getNeighbours(d) {
+    const ids = new Set([d.id]);
+    LINKS.forEach(l => {
+      if (l.source.id === d.id) ids.add(l.target.id);
+      if (l.target.id === d.id) ids.add(l.source.id);
+    });
+    return ids;
+  }
+
+  nodeSel
+    .on("mouseenter", function (ev, d) {
+      const nb = getNeighbours(d);
+
+      nodeSel
+        .classed("node-hi",  n => n.id === d.id)
+        .classed("node-dim", n => !nb.has(n.id));
+
+      // glow on hovered node
+      d3.select(this).select("circle")
+        .attr("filter", "url(#glow)");
+
+      linkSel
+        .classed("link-hi",  l => l.source.id === d.id || l.target.id === d.id)
+        .classed("link-dim", l => l.source.id !== d.id && l.target.id !== d.id);
+
+      tipEl.innerHTML =
+        "<strong>" + d.label.join(" ") + "</strong>" + d.desc;
+      tipEl.style.opacity = "1";
+    })
+    .on("mousemove", function (ev) {
+      const rect = wrap.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      tipEl.style.left = (x + 18) + "px";
+      tipEl.style.top  = Math.max(8, y - 56) + "px";
+    })
+    .on("mouseleave", function () {
+      nodeSel.classed("node-hi node-dim", false);
+      d3.select(this).select("circle").attr("filter", null);
+      linkSel.classed("link-hi link-dim", false);
+      tipEl.style.opacity = "0";
+    })
+    .on("click", (_ev, d) => { window.location.href = d.url; });
+
+  // ── tick ─────────────────────────────────────────────────────────────────
+  sim.on("tick", () => {
+    linkSel
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    nodeSel.attr("transform", d => `translate(${d.x},${d.y})`);
+  });
+
+  // ── resize ────────────────────────────────────────────────────────────────
+  new ResizeObserver(() => {
+    W = wrap.clientWidth;
+    H = wrap.clientHeight;
+    sim.force("center", d3.forceCenter(W / 2, H / 2)).alpha(0.25).restart();
+  }).observe(wrap);
+
+}());
+</script>
+{{ end }}

@@ -104,6 +104,11 @@
             
             <!-- New custom link for individual lessons -->
             <a class="navbar-item" href="/lessons/">Индивидуальные занятия</a>
+
+            <!-- Graph of articles -->
+            {{ if eq .Language.Lang "ru" }}
+            <a class="navbar-item" href="/graph/">Карта статей</a>
+            {{ end }}
             
             {{ range $.Site.Home.AllTranslations.ByWeight }}
             {{ if ne .Language.LanguageName $.Language.LanguageName }}
