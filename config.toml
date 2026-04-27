@@ -7,7 +7,7 @@ defaultContentLanguage = "ru"
 
 
 [params]
-    themeStyle                   = "light"                  # Choose "light" or "dark" or "auto"
+    themeStyle                   = "dark"                   # Choose "light" or "dark" or "auto"
     favicon                      = "/images/favicon.svg"          # Path to favicon file
     showMenu                     = true                    # Show navigation menu
     showRSSButton                = false                   # Show rss button in navigation
