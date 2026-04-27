@@ -7,7 +7,7 @@ defaultContentLanguage = "ru"
 
 
 [params]
-    themeStyle                   = "dark"                   # Choose "light" or "dark" or "auto"
+    themeStyle                   = "light"                  # Choose "light" or "dark" or "auto"
     favicon                      = "/images/favicon.svg"          # Path to favicon file
     showMenu                     = true                    # Show navigation menu
     showRSSButton                = false                   # Show rss button in navigation
@@ -89,7 +89,7 @@ defaultContentLanguage = "ru"
         titleSub = "trumpet"
         [languages.en.params]
             description  = "Teaching playing piano and trumpet"   # Max 160 characters show in search results
-            footerText   = "&copy;Pianorganic & Trumpet, 2025"                      # Text to override default footer text (markdown allowed)
+            footerText   = "&copy;Pianorganic & Trumpet, 2026"                      # Text to override default footer text (markdown allowed)
 
     [languages.ru]
         languageName     = "🇷🇺Русский"
@@ -101,4 +101,4 @@ defaultContentLanguage = "ru"
         titleSub = "труба"
         [languages.ru.params]
             description  = "Обучение игре на фортепиано и трубе"
-            footerText   = "&copy;Пианорганика и труба, 2025"
+            footerText   = "&copy;Пианорганика и труба, 2026"

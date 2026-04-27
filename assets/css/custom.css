@@ -1,149 +1,20 @@
-/* ── цветовая палитра ── */
-:root {
-    --bg:        #0e0e0e;
-    --bg-alt:    #141414;
-    --surface:   #1a1a1a;
-    --border:    #2a2a2a;
-    --text:      #c8c8c8;
-    --text-dim:  #666;
-    --accent:    #e8e8e8;
-    --link:      #a0a0a0;
-    --link-hover:#ffffff;
+.black-part {
+    color: #000000; /* Чёрный цвет */
 }
 
-/* ── базовый фон и шрифт ── */
-html, body {
-    background-color: var(--bg) !important;
-    color: var(--text) !important;
+.yellow-part {
+    color: #FFD700; /* Жёлтый цвет */
 }
 
-/* ── навбар ── */
-.navbar,
-.navbar-menu,
-.navbar-start,
-.navbar-end {
-    background-color: var(--bg) !important;
-    box-shadow: none !important;
-    border-bottom: 1px solid var(--border);
+.small {
+    font-size: 0.5em; /* Уменьшает размер шрифта для элемента "и" */
 }
-.navbar-item,
-.navbar-link {
-    color: var(--link) !important;
-    letter-spacing: 0.04em;
-}
-.navbar-item:hover,
-.navbar-link:hover {
-    background-color: transparent !important;
-    color: var(--link-hover) !important;
-}
-
-/* ── hero / шапка ── */
-.hero,
-.hero-body,
-section.hero {
-    background-color: var(--bg) !important;
-}
-.hero .title,
-.hero .subtitle {
-    color: var(--accent) !important;
-}
-
-/* ── заголовки ── */
-.title, h1, h2, h3, h4 {
-    color: var(--accent) !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.01em;
-}
-
-/* ── основной текст ── */
-.content, p, li, .subtitle {
-    color: var(--text) !important;
-}
-
-/* ── ссылки ── */
-a {
-    color: var(--link) !important;
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.15s, border-color 0.15s;
-}
-a:hover {
-    color: var(--link-hover) !important;
-    border-bottom-color: var(--link-hover);
-}
-
-/* ── секции и разделители ── */
-.section {
-    background-color: var(--bg) !important;
-}
-hr {
-    background-color: var(--border) !important;
-    height: 1px !important;
-}
-
-/* ── карточки проектов / посты ── */
-.card,
-.box {
-    background-color: var(--surface) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: none !important;
-}
-.card .title,
-.box .title {
-    color: var(--accent) !important;
-}
-
-/* ── футер ── */
-footer,
-.footer {
-    background-color: var(--bg) !important;
-    border-top: 1px solid var(--border);
-    color: var(--text-dim) !important;
-}
-footer a,
-.footer a {
-    color: var(--text-dim) !important;
-    border-bottom: none;
-}
-footer a:hover,
-.footer a:hover {
-    color: var(--accent) !important;
-}
-
-/* ── теги / меню языка ── */
-.tag,
-.button.is-light {
-    background-color: var(--surface) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow: none !important;
-}
-
-/* ── форма контакта ── */
-input, textarea, select {
-    background-color: var(--surface) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-}
-input::placeholder, textarea::placeholder {
-    color: var(--text-dim) !important;
-}
-
-/* ── кастомные классы логотипа ── */
-.black-part  { color: var(--accent); }
-.yellow-part { color: #b09a4a; }
-.small       { font-size: 0.5em; }
-
-/* ── баннер ── */
 .banner-container img {
-    border-radius: 100px;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.6);
+    border-radius: 100px;  /* Закругление углов */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Тень для объёмного эффекта */
     margin-top: 0px;
 }
-
-/* ── логотип ── */
-.logo-container img,
-.logo-container {
+.logo-container img {
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
@@ -152,17 +23,38 @@ input::placeholder, textarea::placeholder {
     background: none !important;
 }
 
-/* ── сдвиг hero вниз ── */
-.hero-body { margin-top: 50px; }
+.logo-container {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    background: none !important;
 
-/* ── fade-in анимации ── */
-.fade-in.one   { animation: fadeInAnimation 0.5s ease-in-out forwards; animation-delay: 0s; }
-.fade-in.two   { animation: fadeInAnimation 0.5s ease-in-out forwards; animation-delay: 0.3s; }
-.fade-in.three { animation: fadeInAnimation 0.5s ease-in-out forwards; animation-delay: 0.6s; }
-
-@keyframes fadeInAnimation {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+}
+.hero-body {
+    margin-top: 50px; !important/* Сдвинет секцию на 20px вверх, можно увеличить значение */
+}
+.fade-in.one {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0s;
 }
 
-img { max-width: 100%; height: auto; }
+.fade-in.two {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+
+.fade-in.three {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+img { maxwidth: 100%; height: auto }
