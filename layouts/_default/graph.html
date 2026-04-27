@@ -55,6 +55,12 @@
     opacity: 0.35;
   }
 
+  .g-node.node-active circle {
+    fill: #00b8d4;
+    stroke: #007a8f;
+    stroke-width: 3px;
+  }
+
   .g-label {
     font-family: inherit;
     font-size: 10.5px;
@@ -65,33 +71,70 @@
     transition: opacity 0.2s, fill 0.2s;
   }
 
-  .g-node.node-hi .g-label { fill: #005f6b; font-weight: 600; }
+  .g-node.node-hi .g-label,
+  .g-node.node-active .g-label { fill: #005f6b; font-weight: 600; }
   .g-node.node-dim .g-label { opacity: 0.2; }
 
-  #g-tip {
+  /* ── preview card ─────────────────────────────────────────────────────── */
+  #g-preview {
     position: absolute;
-    background: rgba(255,255,255,0.97);
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    width: 290px;
+    max-width: calc(100% - 32px);
+    background: rgba(255,255,255,0.98);
     border: 1px solid #cde4ea;
-    border-radius: 10px;
-    padding: 9px 14px;
-    font-size: 13px;
-    line-height: 1.45;
-    pointer-events: none;
+    border-radius: 14px;
+    padding: 14px 18px 16px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
     opacity: 0;
-    transition: opacity 0.15s;
-    max-width: 210px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
-    color: #444;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
-  #g-tip strong {
-    display: block;
-    color: #00959f;
-    margin-bottom: 3px;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  #g-preview.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
   }
+
+  #g-preview .preview-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #00959f;
+    text-decoration: none;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  #g-preview .preview-title:hover {
+    text-decoration: underline;
+    color: #007a8f;
+  }
+
+  #g-preview .preview-desc {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  #g-preview .preview-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #aaa;
+    line-height: 1;
+    padding: 2px 4px;
+  }
+
+  #g-preview .preview-close:hover { color: #555; }
 
   .graph-hint {
     font-size: 12px;
@@ -116,9 +159,13 @@
         </filter>
       </defs>
     </svg>
-    <div id="g-tip"></div>
+    <div id="g-preview">
+      <button class="preview-close" aria-label="закрыть">×</button>
+      <a class="preview-title" href=""></a>
+      <p class="preview-desc"></p>
+    </div>
   </div>
-  <p class="graph-hint">Нажмите на статью, чтобы открыть &nbsp;·&nbsp; Перетащите узел &nbsp;·&nbsp; Колёсиком — масштаб</p>
+  <p class="graph-hint">Нажмите на узел — появится превью &nbsp;·&nbsp; Перетащите &nbsp;·&nbsp; Колёсиком — масштаб</p>
 </div>
 {{ end }}
 
@@ -185,18 +232,43 @@
     { source: "by-heart",        target: "art-creativity" }
   ];
 
-  const R = 22;
-  const LINE_H = 13;
+  const R       = 22;
+  const LINE_H  = 13;
 
   const wrap    = document.getElementById("graph-wrap");
   const svgEl   = document.getElementById("graph-svg");
-  const tipEl   = document.getElementById("g-tip");
+  const preview = document.getElementById("g-preview");
+  const prevTitle = preview.querySelector(".preview-title");
+  const prevDesc  = preview.querySelector(".preview-desc");
+  const prevClose = preview.querySelector(".preview-close");
   const svg     = d3.select(svgEl);
 
   let W = wrap.clientWidth;
   let H = wrap.clientHeight;
+  let activeId = null;
 
-  // ── zoom / pan ──────────────────────────────────────────────────────────
+  // ── preview helpers ───────────────────────────────────────────────────────
+  function showPreview(d) {
+    prevTitle.textContent = d.label.join(" ");
+    prevTitle.href = d.url;
+    prevDesc.textContent = d.desc;
+    preview.classList.add("visible");
+    activeId = d.id;
+  }
+
+  function hidePreview() {
+    preview.classList.remove("visible");
+    activeId = null;
+    nodeSel.classed("node-active node-dim", false);
+    linkSel.classed("link-hi link-dim", false);
+  }
+
+  prevClose.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    hidePreview();
+  });
+
+  // ── zoom / pan ────────────────────────────────────────────────────────────
   const root = svg.append("g").attr("class", "zoom-root");
 
   svg.call(
@@ -205,7 +277,10 @@
       .on("zoom", (ev) => root.attr("transform", ev.transform))
   );
 
-  // ── simulation ──────────────────────────────────────────────────────────
+  // click on background closes preview
+  svg.on("click", () => hidePreview());
+
+  // ── simulation ────────────────────────────────────────────────────────────
   const sim = d3.forceSimulation(NODES)
     .force("link",    d3.forceLink(LINKS).id(d => d.id).distance(170).strength(0.42))
     .force("charge",  d3.forceManyBody().strength(-520))
@@ -214,16 +289,16 @@
     .alphaDecay(0.022)
     .velocityDecay(0.38);
 
-  // ── links ────────────────────────────────────────────────────────────────
-  const linkSel = root.append("g").attr("class", "links")
+  // ── links ─────────────────────────────────────────────────────────────────
+  const linkSel = root.append("g")
     .selectAll("line")
     .data(LINKS)
     .join("line")
     .attr("class", "g-link")
     .style("opacity", 0);
 
-  // ── nodes ────────────────────────────────────────────────────────────────
-  const nodeSel = root.append("g").attr("class", "nodes")
+  // ── nodes ─────────────────────────────────────────────────────────────────
+  const nodeSel = root.append("g")
     .selectAll("g")
     .data(NODES)
     .join("g")
@@ -244,27 +319,24 @@
 
   nodeSel.append("circle").attr("r", R);
 
-  // multi-line labels below the circle
+  // multi-line labels below circle
   nodeSel.each(function (d) {
     const g = d3.select(this);
-    const totalH = d.label.length * LINE_H;
-    const startY = R + 10;
-
     d.label.forEach((line, i) => {
       g.append("text")
         .attr("class", "g-label")
-        .attr("y", startY + i * LINE_H + (d.label.length === 1 ? LINE_H / 2 : 0))
+        .attr("y", R + 10 + i * LINE_H + (d.label.length === 1 ? LINE_H / 2 : 0))
         .text(line);
     });
   });
 
-  // ── fade-in after physics settles a bit ─────────────────────────────────
+  // fade-in
   setTimeout(() => {
     nodeSel.transition().duration(700).style("opacity", 1);
     linkSel.transition().duration(700).style("opacity", 1);
   }, 250);
 
-  // ── hover / highlight ────────────────────────────────────────────────────
+  // ── neighbour lookup ──────────────────────────────────────────────────────
   function getNeighbours(d) {
     const ids = new Set([d.id]);
     LINKS.forEach(l => {
@@ -274,49 +346,53 @@
     return ids;
   }
 
+  function applyHighlight(d) {
+    const nb = getNeighbours(d);
+    nodeSel
+      .classed("node-active", n => n.id === d.id)
+      .classed("node-dim",    n => !nb.has(n.id))
+      .classed("node-hi",     false);
+    linkSel
+      .classed("link-hi",  l => l.source.id === d.id || l.target.id === d.id)
+      .classed("link-dim", l => l.source.id !== d.id && l.target.id !== d.id);
+    d3.selectAll(".g-node.node-active circle").attr("filter", "url(#glow)");
+    d3.selectAll(".g-node:not(.node-active) circle").attr("filter", null);
+  }
+
+  // ── hover (desktop only) ──────────────────────────────────────────────────
   nodeSel
     .on("mouseenter", function (ev, d) {
+      if (activeId) return; // preview open — don't change highlight
       const nb = getNeighbours(d);
-
       nodeSel
         .classed("node-hi",  n => n.id === d.id)
         .classed("node-dim", n => !nb.has(n.id));
-
-      // glow on hovered node
-      d3.select(this).select("circle")
-        .attr("filter", "url(#glow)");
-
       linkSel
         .classed("link-hi",  l => l.source.id === d.id || l.target.id === d.id)
         .classed("link-dim", l => l.source.id !== d.id && l.target.id !== d.id);
-
-      tipEl.innerHTML =
-        "<strong>" + d.label.join(" ") + "</strong>" + d.desc;
-      tipEl.style.opacity = "1";
-    })
-    .on("mousemove", function (ev) {
-      const rect = wrap.getBoundingClientRect();
-      const x = ev.clientX - rect.left;
-      const y = ev.clientY - rect.top;
-      tipEl.style.left = (x + 18) + "px";
-      tipEl.style.top  = Math.max(8, y - 56) + "px";
     })
     .on("mouseleave", function () {
+      if (activeId) return;
       nodeSel.classed("node-hi node-dim", false);
-      d3.select(this).select("circle").attr("filter", null);
       linkSel.classed("link-hi link-dim", false);
-      tipEl.style.opacity = "0";
-    })
-    .on("click", (_ev, d) => { window.location.href = d.url; });
+    });
 
-  // ── tick ─────────────────────────────────────────────────────────────────
+  // ── click / tap ───────────────────────────────────────────────────────────
+  nodeSel.on("click", function (ev, d) {
+    ev.stopPropagation();
+    if (activeId === d.id) {
+      hidePreview();
+      return;
+    }
+    applyHighlight(d);
+    showPreview(d);
+  });
+
+  // ── tick ──────────────────────────────────────────────────────────────────
   sim.on("tick", () => {
     linkSel
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
-
+      .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
     nodeSel.attr("transform", d => `translate(${d.x},${d.y})`);
   });
 
