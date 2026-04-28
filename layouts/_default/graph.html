@@ -286,22 +286,20 @@
   const GAP = 12; // gap between circle edge and card
 
   function positionPreview(circleEl) {
-    const cr = circleEl.getBoundingClientRect(); // circle's screen rect
-    const wr = wrap.getBoundingClientRect();     // container's screen rect
+    const cr = circleEl.getBoundingClientRect();
+    const wr = wrap.getBoundingClientRect();
 
-    // circle edges in wrap-local coords
-    const cRight  = cr.right  - wr.left;
-    const cLeft   = cr.left   - wr.left;
-    const cCenterY = (cr.top + cr.bottom) / 2 - wr.top;
+    // circle bottom and horizontal center in wrap-local coords
+    const cBottom  = cr.bottom - wr.top;
+    const cCenterX = (cr.left + cr.right) / 2 - wr.left;
 
-    // prefer right of node, fall back to left
-    let px = cRight + GAP;
-    if (px + PW > W - 8) px = cLeft - GAP - PW;
-    px = Math.max(8, px);
+    // center card horizontally on node, clamp within wrap
+    let px = cCenterX - PW / 2;
+    px = Math.max(8, Math.min(W - PW - 8, px));
 
-    // center vertically on circle, clamp within wrap
-    let py = cCenterY - PH / 2;
-    py = Math.max(8, Math.min(H - PH - 8, py));
+    // place below circle
+    let py = cBottom + GAP;
+    py = Math.min(H - PH - 8, py);
 
     preview.style.left = px + "px";
     preview.style.top  = py + "px";
