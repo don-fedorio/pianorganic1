@@ -281,33 +281,37 @@
   let activeId = null;
 
   // ── preview helpers ───────────────────────────────────────────────────────
-  const PW = 260;
-  const PH = 92; // estimated height
+  const PW  = 260;
+  const PH  = 92; // estimated card height
+  const GAP = 12; // gap between circle edge and card
 
-  function positionPreview(d) {
-    const t  = d3.zoomTransform(svgEl);
-    const nx = t.applyX(d.x);
-    const ny = t.applyY(d.y);
-    const gap = R * t.k + 12;
+  function positionPreview(circleEl) {
+    const cr = circleEl.getBoundingClientRect(); // circle's screen rect
+    const wr = wrap.getBoundingClientRect();     // container's screen rect
 
-    // prefer right, fall back to left
-    let px = nx + gap;
-    if (px + PW > W - 8) px = nx - gap - PW;
+    // circle edges in wrap-local coords
+    const cRight  = cr.right  - wr.left;
+    const cLeft   = cr.left   - wr.left;
+    const cCenterY = (cr.top + cr.bottom) / 2 - wr.top;
+
+    // prefer right of node, fall back to left
+    let px = cRight + GAP;
+    if (px + PW > W - 8) px = cLeft - GAP - PW;
     px = Math.max(8, px);
 
-    // center vertically on node, clamp
-    let py = ny - PH / 2;
+    // center vertically on circle, clamp within wrap
+    let py = cCenterY - PH / 2;
     py = Math.max(8, Math.min(H - PH - 8, py));
 
     preview.style.left = px + "px";
     preview.style.top  = py + "px";
   }
 
-  function showPreview(d) {
+  function showPreview(circleEl, d) {
     prevTitle.textContent = d.label.join(" ");
     prevTitle.href = d.url;
     prevDesc.textContent = d.desc;
-    positionPreview(d);
+    positionPreview(circleEl);
     preview.classList.add("visible");
     activeId = d.id;
   }
@@ -441,7 +445,7 @@
       return;
     }
     applyHighlight(d);
-    showPreview(d);
+    showPreview(this.querySelector("circle"), d);
   });
 
   // ── tick ──────────────────────────────────────────────────────────────────
