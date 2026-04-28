@@ -78,11 +78,8 @@
   /* ── preview card ─────────────────────────────────────────────────────── */
   #g-preview {
     position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%) translateY(12px);
-    width: 290px;
-    max-width: calc(100% - 32px);
+    width: 260px;
+    max-width: calc(100% - 16px);
     background: rgba(255,255,255,0.98);
     border: 1px solid #cde4ea;
     border-radius: 14px;
@@ -90,13 +87,12 @@
     box-shadow: 0 6px 24px rgba(0,0,0,0.10);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.18s ease;
   }
 
   #g-preview.visible {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
   }
 
   #g-preview .preview-title {
@@ -285,10 +281,33 @@
   let activeId = null;
 
   // ── preview helpers ───────────────────────────────────────────────────────
+  const PW = 260;
+  const PH = 92; // estimated height
+
+  function positionPreview(d) {
+    const t  = d3.zoomTransform(svgEl);
+    const nx = t.applyX(d.x);
+    const ny = t.applyY(d.y);
+    const gap = R * t.k + 12;
+
+    // prefer right, fall back to left
+    let px = nx + gap;
+    if (px + PW > W - 8) px = nx - gap - PW;
+    px = Math.max(8, px);
+
+    // center vertically on node, clamp
+    let py = ny - PH / 2;
+    py = Math.max(8, Math.min(H - PH - 8, py));
+
+    preview.style.left = px + "px";
+    preview.style.top  = py + "px";
+  }
+
   function showPreview(d) {
     prevTitle.textContent = d.label.join(" ");
     prevTitle.href = d.url;
     prevDesc.textContent = d.desc;
+    positionPreview(d);
     preview.classList.add("visible");
     activeId = d.id;
   }
