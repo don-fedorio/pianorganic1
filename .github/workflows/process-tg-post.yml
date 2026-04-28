@@ -1,0 +1,37 @@
+name: Process Telegram Post
+
+on:
+  repository_dispatch:
+    types: [new-tg-post]
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Anthropic SDK
+        run: npm install @anthropic-ai/sdk
+
+      - name: Process post and create content
+        run: node scripts/process-tg-post.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TG_POST_TEXT: ${{ github.event.client_payload.text }}
+          TG_POST_DATE: ${{ github.event.client_payload.date }}
+          TG_POST_MESSAGE_ID: ${{ github.event.client_payload.message_id }}
+
+      - name: Commit and push
+        run: |
+          git config user.name "pianorganic-bot"
+          git config user.email "bot@pianorganic.info"
+          git add content/ru/blog content/en/blog data/graph_ru.json data/graph_en.json
+          git diff --cached --quiet || git commit -m "auto: publish article from Telegram [skip ci]"
+          git push origin master

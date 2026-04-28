@@ -1,0 +1,37 @@
+{
+  "nodes": [
+    { "id": "character",      "label": ["The Character"],             "url": "/en/blog/character/character/",          "desc": "A living entity of the subconscious and the inner voice of music" },
+    { "id": "mastery",        "label": ["The Birth", "of Mastery"],   "url": "/en/blog/mastery/mastery/",              "desc": "How true mastery is born — from within, not from rules" },
+    { "id": "etude",          "label": ["When the", "Étude Sings"],   "url": "/en/blog/etude/etude/",                  "desc": "The étude as a path, not a finger warm-up" },
+    { "id": "authority",      "label": ["Don't Play", "the Expert"],  "url": "/en/blog/authority/authority/",          "desc": "Genuine knowledge without posturing" },
+    { "id": "sensei",         "label": ["The One Who", "Walked Ahead"], "url": "/en/blog/sensei/sensei/",              "desc": "A teacher who has walked the path through mistakes" },
+    { "id": "art-creativity", "label": ["Where Creativity", "Begins"], "url": "/en/blog/art-creativity/art-creativity/", "desc": "The border between craft and genuine creativity" },
+    { "id": "by-heart",       "label": ["Playing", "by Heart"],       "url": "/en/blog/by-heart/by-heart/",            "desc": "Memory as a living response, not rote learning" },
+    { "id": "barline",        "label": ["The Nature", "of the Barline"], "url": "/en/blog/barline/barline/",           "desc": "Rhythm as the irreducible property of all music" },
+    { "id": "identical",      "label": ["Identical:", "A Self-Analysis"], "url": "/en/blog/identical/identical/",      "desc": "Chirality, mirror portal, and fingering as expressive tool" },
+    { "id": "macdowell",      "label": ["MacDowell and", "Pedagogy"], "url": "/en/blog/macdowell/macdowell/",          "desc": "Edward MacDowell — founder of the American composers' school" },
+    { "id": "creative-block", "label": ["Creative", "Dead End"],      "url": "/en/blog/creative-block/creative-block/", "desc": "An honest monologue about the search for novelty" }
+  ],
+  "links": [
+    { "source": "character",      "target": "mastery"        },
+    { "source": "character",      "target": "by-heart"       },
+    { "source": "character",      "target": "art-creativity" },
+    { "source": "mastery",        "target": "etude"          },
+    { "source": "mastery",        "target": "art-creativity" },
+    { "source": "sensei",         "target": "authority"      },
+    { "source": "sensei",         "target": "mastery"        },
+    { "source": "etude",          "target": "by-heart"       },
+    { "source": "by-heart",       "target": "art-creativity" },
+    { "source": "barline",        "target": "by-heart"       },
+    { "source": "barline",        "target": "etude"          },
+    { "source": "barline",        "target": "identical"      },
+    { "source": "identical",      "target": "character"      },
+    { "source": "identical",      "target": "art-creativity" },
+    { "source": "identical",      "target": "mastery"        },
+    { "source": "macdowell",      "target": "sensei"         },
+    { "source": "macdowell",      "target": "creative-block" },
+    { "source": "creative-block", "target": "character"      },
+    { "source": "creative-block", "target": "mastery"        },
+    { "source": "creative-block", "target": "art-creativity" }
+  ]
+}

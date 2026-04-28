@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
     "postcss-cli": "^10.1.0"

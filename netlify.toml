@@ -4,3 +4,8 @@
 
 [build.environment]
     HUGO_VERSION = "0.107.0"
+    NODE_VERSION = "20"
+
+[functions]
+    directory = "netlify/functions"
+    node_bundler = "esbuild"
