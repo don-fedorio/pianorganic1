@@ -4,6 +4,9 @@ date: 2025-05-19
 weight: 10
 tags: ["play/hints"]
 draft: false
+graph_label: ["Missing", "the Notes"]
+graph_desc: "Anticipation and the art of playing without mistakes"
+graph_connects: ["mastery"]
 ---
 
 How not to stick to neighboring, incorrect keys when playing at a fast pace? In other words, how to stop missing and start hitting 100% of the time?
