@@ -189,8 +189,18 @@
   const NODES = _raw.nodes;
   const LINKS = _raw.links;
 
-  const R       = 22;
-  const LINE_H  = 13;
+  const LINE_H = 13;
+
+  // node radius proportional to degree (undirected)
+  const degree = {};
+  NODES.forEach(n => { degree[n.id] = 0; });
+  LINKS.forEach(l => {
+    degree[l.source] = (degree[l.source] || 0) + 1;
+    degree[l.target] = (degree[l.target] || 0) + 1;
+  });
+  const maxDeg = Math.max(...Object.values(degree), 1);
+  const rScale = d3.scaleSqrt().domain([1, maxDeg]).range([13, 30]);
+  NODES.forEach(n => { n.r = rScale(Math.max(degree[n.id], 1)); });
 
   const wrap    = document.getElementById("graph-wrap");
   const svgEl   = document.getElementById("graph-svg");
@@ -267,7 +277,7 @@
     .force("link",    d3.forceLink(LINKS).id(d => d.id).distance(170).strength(0.42))
     .force("charge",  d3.forceManyBody().strength(-520))
     .force("center",  d3.forceCenter(W / 2, H / 2))
-    .force("collide", d3.forceCollide(R + 46))
+    .force("collide", d3.forceCollide(d => d.r + 40))
     .alphaDecay(0.022)
     .velocityDecay(0.38);
 
@@ -299,7 +309,7 @@
         })
     );
 
-  nodeSel.append("circle").attr("r", R);
+  nodeSel.append("circle").attr("r", d => d.r);
 
   // multi-line labels below circle
   nodeSel.each(function (d) {
@@ -307,7 +317,7 @@
     d.label.forEach((line, i) => {
       g.append("text")
         .attr("class", "g-label")
-        .attr("y", R + 10 + i * LINE_H + (d.label.length === 1 ? LINE_H / 2 : 0))
+        .attr("y", d.r + 10 + i * LINE_H + (d.label.length === 1 ? LINE_H / 2 : 0))
         .text(line);
     });
   });
