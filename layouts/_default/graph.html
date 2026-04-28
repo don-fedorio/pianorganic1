@@ -179,13 +179,13 @@
     {{ end }}
   {{ end }}
 {{ end }}
-<script id="graph-data" type="application/json">{{ dict "nodes" $nodes "links" $links | jsonify }}</script>
+<textarea id="graph-data" style="display:none">{{ dict "nodes" $nodes "links" $links | jsonify }}</textarea>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
 (function () {
   "use strict";
 
-  const _raw  = JSON.parse(document.getElementById("graph-data").textContent);
+  const _raw  = JSON.parse(document.getElementById("graph-data").value);
   const NODES = _raw.nodes;
   const LINKS = _raw.links;
 
