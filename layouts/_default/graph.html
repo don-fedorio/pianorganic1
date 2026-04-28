@@ -166,18 +166,28 @@
 {{ end }}
 
 {{ define "customScripts" }}
+{{ $nodes := slice }}
+{{ $links := slice }}
+{{ range where .Site.RegularPages "Section" "blog" }}
+  {{ if .Params.graph_label }}
+    {{ $nodes = $nodes | append (dict "id" .File.TranslationBaseName "label" .Params.graph_label "url" .RelPermalink "desc" (.Params.graph_desc | default "")) }}
+  {{ end }}
+  {{ if .Params.graph_connects }}
+    {{ $src := .File.TranslationBaseName }}
+    {{ range .Params.graph_connects }}
+      {{ $links = $links | append (dict "source" $src "target" .) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+<script id="graph-data" type="application/json">{{ dict "nodes" $nodes "links" $links | jsonify }}</script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
 (function () {
   "use strict";
 
-  {{ $pages := where .Site.RegularPages "Section" "blog" }}
-  const NODES = [{{ range $pages }}{{ if .Params.graph_label }}
-    { id: {{ .File.TranslationBaseName | jsonify }}, label: {{ .Params.graph_label | jsonify }}, url: {{ .RelPermalink | jsonify }}, desc: {{ .Params.graph_desc | default "" | jsonify }} },{{ end }}{{ end }}
-  ];
-  const LINKS = [{{ range $pages }}{{ if .Params.graph_connects }}{{ $src := .File.TranslationBaseName }}{{ range .Params.graph_connects }}
-    { source: {{ $src | jsonify }}, target: {{ . | jsonify }} },{{ end }}{{ end }}{{ end }}
-  ];
+  const _raw  = JSON.parse(document.getElementById("graph-data").textContent);
+  const NODES = _raw.nodes;
+  const LINKS = _raw.links;
 
   const R       = 22;
   const LINE_H  = 13;
