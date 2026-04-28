@@ -2,6 +2,9 @@
 title: "When the Étude Sings"
 date: 2025-06-03
 draft: false
+graph_label: ["When the", "Étude Sings"]
+graph_desc: "The étude as a path, not a finger warm-up"
+graph_connects: ["by-heart"]
 ---
 
 How long can we pretend the étude is just a finger warm-up? As if a musician were a gymnast on a keyboard bar. Students march through Czerny and Cramer with an expression of silent duty, as if outside there were no rain, no wind, no inner voice aching to say something.

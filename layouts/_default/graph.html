@@ -171,79 +171,13 @@
 (function () {
   "use strict";
 
-  {{ if eq .Site.Language.Lang "en" }}
-  const NODES = [
-    { id: "character",      label: ["The Character"],             url: "/en/blog/character/character/",          desc: "A living entity of the subconscious and the inner voice of music" },
-    { id: "mastery",        label: ["The Birth", "of Mastery"],   url: "/en/blog/mastery/mastery/",              desc: "How true mastery is born — from within, not from rules" },
-    { id: "etude",          label: ["When the", "Étude Sings"],   url: "/en/blog/etude/etude/",                  desc: "The étude as a path, not a finger warm-up" },
-    { id: "authority",      label: ["Don't Play", "the Expert"],  url: "/en/blog/authority/authority/",          desc: "Genuine knowledge without posturing" },
-    { id: "sensei",         label: ["The One Who", "Walked Ahead"], url: "/en/blog/sensei/sensei/",              desc: "A teacher who has walked the path through mistakes" },
-    { id: "art-creativity", label: ["Where Creativity", "Begins"], url: "/en/blog/art-creativity/art-creativity/", desc: "The border between craft and genuine creativity" },
-    { id: "by-heart",       label: ["Playing", "by Heart"],       url: "/en/blog/by-heart/by-heart/",            desc: "Memory as a living response, not rote learning" },
-    { id: "barline",        label: ["The Nature", "of the Barline"], url: "/en/blog/barline/barline/",           desc: "Rhythm as the irreducible property of all music" },
-    { id: "identical",      label: ["Identical:", "A Self-Analysis"], url: "/en/blog/identical/identical/",      desc: "Chirality, mirror portal, and fingering as expressive tool" },
-    { id: "macdowell",      label: ["MacDowell and", "Pedagogy"], url: "/en/blog/macdowell/macdowell/",          desc: "Edward MacDowell — founder of the American composers' school" },
-    { id: "creative-block", label: ["Creative", "Dead End"],      url: "/en/blog/creative-block/creative-block/", desc: "An honest monologue about the search for novelty" }
+  {{ $pages := where .Site.RegularPages "Section" "blog" }}
+  const NODES = [{{ range $pages }}{{ if .Params.graph_label }}
+    { id: {{ .File.TranslationBaseName | jsonify }}, label: {{ .Params.graph_label | jsonify }}, url: {{ .RelPermalink | jsonify }}, desc: {{ .Params.graph_desc | default "" | jsonify }} },{{ end }}{{ end }}
   ];
-  const LINKS = [
-    { source: "character",      target: "mastery"        },
-    { source: "character",      target: "by-heart"       },
-    { source: "character",      target: "art-creativity" },
-    { source: "mastery",        target: "etude"          },
-    { source: "mastery",        target: "art-creativity" },
-    { source: "sensei",         target: "authority"      },
-    { source: "sensei",         target: "mastery"        },
-    { source: "etude",          target: "by-heart"       },
-    { source: "by-heart",       target: "art-creativity" },
-    { source: "barline",        target: "by-heart"       },
-    { source: "barline",        target: "etude"          },
-    { source: "barline",        target: "identical"      },
-    { source: "identical",      target: "character"      },
-    { source: "identical",      target: "art-creativity" },
-    { source: "identical",      target: "mastery"        },
-    { source: "macdowell",      target: "sensei"         },
-    { source: "macdowell",      target: "creative-block" },
-    { source: "creative-block", target: "character"      },
-    { source: "creative-block", target: "mastery"        },
-    { source: "creative-block", target: "art-creativity" }
+  const LINKS = [{{ range $pages }}{{ if .Params.graph_connects }}{{ $src := .File.TranslationBaseName }}{{ range .Params.graph_connects }}
+    { source: {{ $src | jsonify }}, target: {{ . | jsonify }} },{{ end }}{{ end }}{{ end }}
   ];
-  {{ else }}
-  const NODES = [
-    { id: "personazh",        label: ["Персонаж"],                    url: "/blog/personazh/personazh/",                 desc: "Живая сущность подсознания и внутренний голос музыки" },
-    { id: "mastery",          label: ["Рождение", "мастерства"],      url: "/blog/mastery/mastery/",                     desc: "Как рождается настоящее мастерство — изнутри, а не по правилам" },
-    { id: "etude",            label: ["Когда", "этюд поёт"],          url: "/blog/etude/etude/",                         desc: "Этюд как путь и хроника преодоления" },
-    { id: "authority",        label: ["Не строй", "из себя знатока"], url: "/blog/authority/authority/",                 desc: "Подлинное знание без позы и давления" },
-    { id: "sensei",           label: ["Тот, кто шёл", "впереди"],     url: "/blog/sensei/sensei/",                       desc: "Учитель, который сам прошёл путь через ошибки" },
-    { id: "art-creativity",   label: ["Где начинается", "творчество"], url: "/blog/art-creativity/art-creativity/",     desc: "Граница между искусством и подлинным творчеством" },
-    { id: "by-heart",         label: ["Выучить", "наизусть"],         url: "/blog/by-heart/by-heart/",                   desc: "Память как живой отклик, а не зубрёжка" },
-    { id: "taktovaya-cherta", label: ["Природа", "тактовой черты"],   url: "/blog/taktovaya-cherta/taktovaya-cherta/",   desc: "Ритм как неотъемлемое свойство музыки и смысл тактовой черты" },
-    { id: "odinakovye",       label: ["Одинаковые:", "опыт самоанализа"], url: "/blog/odinakovye/odinakovye/",           desc: "Хиральность, зеркальный портал и аппликатура как средство выразительности" },
-    { id: "macdowell",        label: ["МакДоуэлл и", "педагогика"],   url: "/blog/macdowell/macdowell/",                 desc: "Эдвард МакДоуэлл — основоположник американской композиторской школы" },
-    { id: "tupik",            label: ["Творческий", "тупик"],         url: "/blog/tupik/tupik/",                         desc: "Честный монолог о поиске новизны и академическом кризисе" }
-  ];
-  const LINKS = [
-    { source: "personazh",        target: "mastery"           },
-    { source: "personazh",        target: "by-heart"          },
-    { source: "personazh",        target: "art-creativity"    },
-    { source: "mastery",          target: "etude"             },
-    { source: "mastery",          target: "art-creativity"    },
-    { source: "sensei",           target: "authority"         },
-    { source: "sensei",           target: "mastery"           },
-    { source: "etude",            target: "by-heart"          },
-    { source: "by-heart",         target: "art-creativity"    },
-    { source: "taktovaya-cherta", target: "by-heart"          },
-    { source: "taktovaya-cherta", target: "etude"             },
-    { source: "taktovaya-cherta", target: "odinakovye"        },
-    { source: "odinakovye",       target: "personazh"         },
-    { source: "odinakovye",       target: "art-creativity"    },
-    { source: "odinakovye",       target: "mastery"           },
-    { source: "macdowell",        target: "sensei"            },
-    { source: "macdowell",        target: "tupik"             },
-    { source: "tupik",            target: "personazh"         },
-    { source: "tupik",            target: "mastery"           },
-    { source: "tupik",            target: "art-creativity"    }
-  ];
-  {{ end }}
 
   const R       = 22;
   const LINE_H  = 13;

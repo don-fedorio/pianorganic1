@@ -2,6 +2,9 @@
 date: 2026-04-27
 title: "The Character"
 draft: false
+graph_label: ["The Character"]
+graph_desc: "A living entity of the subconscious and the inner voice of music"
+graph_connects: ["mastery", "by-heart", "art-creativity"]
 ---
 
 Inside the mind there is a region that is difficult to see directly. It goes by many names — the deep level, the subconscious. It is not a dark room or an archive. It is a living structure, one that continuously passes something upward to the surface — something new, something you could not have anticipated.

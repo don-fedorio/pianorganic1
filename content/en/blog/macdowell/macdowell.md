@@ -2,6 +2,9 @@
 title: "MacDowell and American Pedagogy"
 date: 2025-02-05
 draft: false
+graph_label: ["MacDowell and", "Pedagogy"]
+graph_desc: "Edward MacDowell — founder of the American composers' school"
+graph_connects: ["sensei", "creative-block"]
 ---
 
 Starting again after a break is hard. The brain is busy keeping the body alive — circulating blood, digesting food, clearing waste — and "extra" work is the last thing it wants. Any effort after a long rest genuinely feels like self-harm.

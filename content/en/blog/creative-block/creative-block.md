@@ -2,6 +2,9 @@
 title: "Creative Dead End"
 date: 2025-02-20
 draft: false
+graph_label: ["Creative", "Dead End"]
+graph_desc: "An honest monologue about the search for novelty"
+graph_connects: ["character", "mastery", "art-creativity"]
 ---
 
 Too much is undefined. The deadlines have long passed. Maybe I will not be able to write anything at all.

@@ -2,6 +2,8 @@
 title: "Where Creativity Begins"
 date: 2025-05-20
 draft: false
+graph_label: ["Where Creativity", "Begins"]
+graph_desc: "The border between craft and genuine creativity"
 ---
 
 Art is not yet creativity.

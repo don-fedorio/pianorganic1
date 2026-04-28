@@ -2,6 +2,8 @@
 title: "Don't Play the Expert"
 date: 2025-05-25
 draft: false
+graph_label: ["Don't Play", "the Expert"]
+graph_desc: "Genuine knowledge without posturing"
 ---
 
 A real teacher never presses with knowledge. Not because there is something to hide — quite the opposite. It is simply that they long ago understood: the louder you sound, the less substance there is in you.

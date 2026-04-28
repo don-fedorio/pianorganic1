@@ -2,6 +2,9 @@
 title: "Identical: A Self-Analysis"
 date: 2025-01-20
 draft: false
+graph_label: ["Identical:", "A Self-Analysis"]
+graph_desc: "Chirality, mirror portal, and fingering as expressive tool"
+graph_connects: ["character", "art-creativity", "mastery"]
 ---
 
 *Identical* is a two-voice piano piece with a short middle episode, where several voices accumulate before the original texture returns. Key of A minor, time signature 5/4, tempo Andante.

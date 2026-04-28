@@ -2,6 +2,9 @@
 title: "Playing by Heart"
 date: 2025-05-19
 draft: false
+graph_label: ["Playing", "by Heart"]
+graph_desc: "Memory as a living response, not rote learning"
+graph_connects: ["art-creativity"]
 ---
 
 Memory is capricious matter — musical memory especially. Anyone who has ever performed from memory knows: it is not simple repetition of something learned, not a mechanical routine, but something far more delicate and alive.

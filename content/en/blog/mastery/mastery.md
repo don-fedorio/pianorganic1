@@ -2,6 +2,9 @@
 title: "The Birth of Mastery"
 date: 2025-06-07
 draft: false
+graph_label: ["The Birth", "of Mastery"]
+graph_desc: "How true mastery is born — from within, not from rules"
+graph_connects: ["etude", "art-creativity"]
 ---
 
 From the very beginning, you are handed a system. Rules, positions, instructions:

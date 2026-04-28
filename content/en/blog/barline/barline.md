@@ -2,6 +2,9 @@
 title: "The Nature of the Barline"
 date: 2025-01-10
 draft: false
+graph_label: ["The Nature", "of the Barline"]
+graph_desc: "Rhythm as the irreducible property of all music"
+graph_connects: ["by-heart", "etude", "identical"]
 ---
 
 What was the barline invented for?
