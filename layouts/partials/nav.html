@@ -108,6 +108,8 @@
             <!-- Graph of articles -->
             {{ if eq .Language.Lang "ru" }}
             <a class="navbar-item" href="/graph/">Карта статей</a>
+            {{ else if eq .Language.Lang "en" }}
+            <a class="navbar-item" href="/en/graph/">Article Map</a>
             {{ end }}
             
             {{ range $.Site.Home.AllTranslations.ByWeight }}
